@@ -12,29 +12,35 @@ body {
 
 /* Header Styles */
 h1 {
-    color: #e7a6b3; /* I just like this pink. Might change later -M */
+    color: #fcc4cf; /* I just like this pink. Might change later -M */
+    -webkit-text-stroke: #560b1a 0.5px; /* Text stroke for header 1 */
     text-align: center;
     margin-top: 20px;
+    font-size: 50px;
 }
 h2 {
     color: #fffbfc; /* header 2 color */
+    -webkit-text-stroke: #704d56 0.5px; /* Text stroke for header 2 */
     text-align: center;
     margin-top: 10px;
+    font-size: 35px;
 }
 
 /* Button Styles */
-button {
-    background-color: #fcc4cf; /* Hospital blue */
+.button {
+    background-color: #fcc4cf; 
     color: white;
     border: none;
     padding: 10px 20px;
-    margin: 10px 0;
-    font-size: 16px;
+    margin: 10px 20px;
     cursor: pointer;
     border-radius: 5px;
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
 }
 
-button:hover {
+.button:hover {
     background-color: #e7a6b3;
 }
 
@@ -76,12 +82,12 @@ li {
     border-radius: 5px;
 }
 
-a {
+.delete {
     text-decoration: none;
     color: #d9534f; /* Red for delete */
 }
 
-a:hover {
+.delete:hover {
     text-decoration: underline;
 }
 

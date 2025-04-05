@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conditions</title>
+    <title>Previously Reported Conditions</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <div class="container">
+        <a class='button' href="{{ url_for('start') }}" text-align='right'>Sign Out</a>
         <h1>Patient Journal</h1>
 
         <!-- Form to Add New Item and Slider Value -->
@@ -35,7 +36,7 @@
             {% for item in items %}
             <li>
                 {{ item['name'] }} - Severity: {{ item['value'] }} - Time: {{ item['date_time'] }}
-                <a href="{{ url_for('delete_item', item_id=item['id']) }}">Remove</a>
+                <a class='delete' href="{{ url_for('delete_item', item_id=item['id']) }}">Remove</a>
             </li>
             {% endfor %}
         </ul>
