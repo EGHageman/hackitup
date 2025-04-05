@@ -44,6 +44,18 @@ h2 {
     background-color: #e7a6b3;
 }
 
+.small-button{
+    background-color: #fcc4cf; 
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 20px;
+    text-decoration: none;
+}
+
 /* Form Styles */
 form {
     max-width: 500px;
