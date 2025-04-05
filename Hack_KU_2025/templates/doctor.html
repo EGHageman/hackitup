@@ -11,6 +11,7 @@
   <body>
     <div class="container">
       <h1>Doctor's Dashboard</h1>
+      <a class='sign-out' href="{{ url_for('start') }}">Sign Out</a>
 
       <!-- Filter Form to Select Severity -->
       <form action="{{ url_for('doctor') }}" method="GET">
@@ -41,7 +42,7 @@
           placeholder="Enter injury"
           value="{{ request.args.get('name_filter', '') }}"
         />
-        <button type="submit">Filter by Name</button>
+        <button class="small-button" type="submit">Filter by Name</button>
       </form>
 
       <div class="side-view">
@@ -78,12 +79,12 @@
               placeholder="Enter message"
               required
             />
-            <button type="submit">Send</button>
+            <button class='small-button' type="submit">Send</button>
           </form>
         </div>
       </div>
 
-      <a href="{{ url_for('start') }}"><button>Sign Out</button></a>
+      <a class='sign-out' href="{{ url_for('start') }}"><button>Sign Out</button></a>
 
       <script
         src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
