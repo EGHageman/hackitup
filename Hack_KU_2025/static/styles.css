@@ -2,7 +2,7 @@
 
 /* General Body Styles */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: "Arial", sans-serif;
     background: url("https://png.pngtree.com/thumb_back/fh260/background/20230412/pngtree-colorful-clouds-cartoon-clouds-fantasy-clouds-sky-cute-background-image_2204266.jpg"); /* Background image */
     background-size: cover;
     color: #e4c6cd; /* Text color */
@@ -12,11 +12,11 @@ body {
 
 /* Header Styles */
 h1 {
-    color:#e7a6b3; /* I just like this pink. Might change later -M */
+    color: #e7a6b3; /* I just like this pink. Might change later -M */
     text-align: center;
     margin-top: 20px;
 }
-h2{
+h2 {
     color: #fffbfc; /* header 2 color */
     text-align: center;
     margin-top: 10px;
@@ -48,7 +48,8 @@ form {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-input[type="text"], input[type="range"] {
+input[type="text"],
+input[type="range"] {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
@@ -88,4 +89,30 @@ a:hover {
 .container {
     width: 80%;
     margin: 0 auto;
+}
+
+#chat-form {
+    h2 {
+        color: black;
+    }
+
+    .message {
+        width: fit-content;
+        color: #333;
+    }
+
+    .doctor {
+        background: #00ffdf;
+    }
+
+    .patient {
+        background: #00dfff;
+        text-align: right;
+        margin-left: auto;
+    }
+
+    .timestamp {
+        font-size: 0.75em;
+        color: #666;
+    }
 }
