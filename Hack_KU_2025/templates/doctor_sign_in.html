@@ -5,15 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doctor Sign-In</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
-    <div class="sign-in-container">
-        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <style>
         /* Sign-in Page Styles */
         /* Running seperate from the static styles sheet, EG*/
         .sign-in-container {
-            max-width: 500px;
+            max-width: 400px;
             margin: 100px auto;
             padding: 20px;
             background-color: #fff;
@@ -23,13 +19,13 @@
 
         h2 {
             text-align: center;
-            color: #005c87; /*Running it a bit darker then the buttons, EG*/
+            color: #704d56; /*Running it a bit darker then the buttons, EG*/
         }
 
         input[type="text"], input[type="password"] {
             width: 100%;
             padding: 12px 20px;
-            margin: 8px 0;
+            margin-bottom: 8px;
             display: inline-block;
             border: 1px solid #ccc;
             box-sizing: border-box;
@@ -39,7 +35,7 @@
         button {
             width: 100%;
             padding: 12px;
-            background-color: #008CBA; /*I think this blue is very on point for general portals, EG*/
+            background-color: #bc7b8b; /*I think this blue is very on point for general portals, EG*/
             color: white;
             border: none;
             border-radius: 5px;
@@ -48,7 +44,7 @@
         }
 
         button:hover {
-            background-color: #006F8C;
+            background-color: #a3576a;
         }
 
         .forgot-password {
@@ -57,7 +53,7 @@
         }
 
         .forgot-password a {
-            color: #005c87;
+            color: #704d56;
             text-decoration: none;
         }
 
@@ -67,6 +63,7 @@
     </style>
 </head>
 <body>
+    <h1>Welcome to Hack It Up!</h1>
     <div class="sign-in-container">
         <h2>Provider Sign-in</h2>
 

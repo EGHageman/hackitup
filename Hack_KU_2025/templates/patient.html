@@ -30,16 +30,19 @@
 
             <button class='small-button' type="submit">Add Item</button>
         </form>
-
-        <h2>Conditions:</h2>
-        <ul>
-            {% for item in items %}
-            <li>
-                {{ item['name'] }} - Severity: {{ item['value'] }} - Time: {{ item['date_time'] }}
-                <a class='delete' href="{{ url_for('delete_item', item_id=item['id']) }}">Remove</a>
-            </li>
-            {% endfor %}
-        </ul>
+        
+        <div class="side-view">
+            <div class="panel">
+                <h2>Conditions:</h2>
+                <ul>
+                    {% for item in items %}
+                    <li>
+                        {{ item['name'] }} - Severity: {{ item['value'] }} - Time: {{ item['date_time'] }}
+                        <a class='delete' href="{{ url_for('delete_item', item_id=item['id']) }}">Remove</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
 
         <!-- Chat form for communication betwen provider and patient -->
         <form id="chat-form" action="/patient/chat" method="POST">
