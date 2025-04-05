@@ -169,11 +169,11 @@ li {
     }
 
     .doctor {
-        background: #00ffdf;
+        background: #dcd5e7;
     }
 
     .patient {
-        background: #00dfff;
+        background: #63b8e1;
         text-align: right;
         margin-left: auto;
     }
