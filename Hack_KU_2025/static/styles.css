@@ -123,14 +123,38 @@ li {
     margin: 0 auto;
 }
 
+.side-view {
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+
+    .panel {
+        width: 50%;
+        border-radius: 5px;
+        background-color: white;
+
+        h2 {
+            color: black;
+        }
+    }
+}
+
 #chat-form {
     h2 {
         color: black;
     }
 
+    .history {
+      overflow-y: auto;
+      max-height: 100%;
+    }
+
     .message {
-        width: fit-content;
         color: #333;
+        width: fit-content;
+        min-width: 15%;
+        max-width: 40%;
+        overflow-wrap: break-word;
     }
 
     .doctor {
