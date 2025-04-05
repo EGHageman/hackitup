@@ -1,7 +1,11 @@
+import time
 from flask import Flask, render_template, request, redirect, url_for
+from flask_socketio import SocketIO, emit
 import sqlite3
 
 app = Flask(__name__)
+socketio = SocketIO(app)
+
 
 # Connect to SQLite Database
 def get_db_connection():
@@ -13,106 +17,159 @@ def get_db_connection():
 def init_db():
     conn = get_db_connection()
 
-    #The sql data base column build
-    #IMPORTANT: Remeber to delete or manually add onto database if a new entry is introduced, EG
-    conn.execute('''CREATE TABLE IF NOT EXISTS items (
+    # The sql data base column build
+    # IMPORTANT: Remeber to delete or manually add onto database if a new entry is introduced, EG
+    conn.execute("""CREATE TABLE IF NOT EXISTS items (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         name TEXT NOT NULL,
                         value INTEGER NOT NULL,
                         date_time TEXT NOT NULL
-                    )''')
+                    )""")
+    conn.execute("""CREATE TABLE IF NOT EXISTS messages (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        sender TEXT NOT NULL,
+                        content TEXT NOT NULL,
+                        date_time TEXT NOT NULL
+                    )""")
 
     conn.commit()
     conn.close()
 
-@app.route('/')
+
+@app.route("/")
 def home():
-    return render_template('index.html')  # The homepage that links to `/patient`
+    return render_template("index.html")  # The homepage that links to `/patient`
 
 
-@app.route('/')
+@app.route("/")
 def start():
-    return render_template('index.html')  # The homepage that links to `/patient`
+    return render_template("index.html")  # The homepage that links to `/patient`
 
 
-@app.route('/sign-in', methods=['GET', 'POST'])
+@app.route("/sign-in", methods=["GET", "POST"])
 def sign_in():
     # Mock sign-in (no actual login functionality)
-    if request.method == 'POST':
+    if request.method == "POST":
         # Normally, you would check the credentials here, but we will just mock the process, EG.
-        return redirect(url_for('patient'))  # Redirect to patient page after submitting
+        return redirect(url_for("patient"))  # Redirect to patient page after submitting
 
-    return render_template('sign_in.html')  # Render sign-in page when accessed by GET request
+    return render_template(
+        "sign_in.html"
+    )  # Render sign-in page when accessed by GET request
 
-@app.route('/patient')
+
+@app.route("/patient")
 def patient():
     conn = get_db_connection()
-    items = conn.execute('SELECT * FROM items').fetchall()  # Fetch all items from DB
-    conn.close()
-    return render_template('patient.html', items=items)
+    items = conn.execute("SELECT * FROM items").fetchall()  # Fetch all items from DB
 
-@app.route('/doctor-sign-in', methods=['GET', 'POST'])
+    # Fetch all messages from DB
+    messages = conn.execute("SELECT * FROM messages").fetchall()
+
+    conn.close()
+    return render_template("patient.html", items=items, messages=messages)
+
+
+@app.route("/doctor-sign-in", methods=["GET", "POST"])
 def doctor_sign_in():
     # Mock sign-in (no actual login functionality)
-    if request.method == 'POST':
+    if request.method == "POST":
         # Normally, you would check the credentials here, but we will just mock the process.
-        return redirect(url_for('doctor'))  # Redirect to doctor page after submitting
+        return redirect(url_for("doctor"))  # Redirect to doctor page after submitting
 
-    return render_template('doctor_sign_in.html')  # Render doctor sign-in page when accessed by GET request
+    return render_template(
+        "doctor_sign_in.html"
+    )  # Render doctor sign-in page when accessed by GET request
 
-@app.route('/add', methods=['POST'])
+
+@app.route("/add", methods=["POST"])
 def add_item():
-    item_name = request.form['item_name'] #User can input the condition name
-    item_value = request.form['item_value']  # Get the value of the slider from the form
-    date_time = request.form['date_time']  # Get the date and time from the form
+    item_name = request.form["item_name"]  # User can input the condition name
+    item_value = request.form["item_value"]  # Get the value of the slider from the form
+    date_time = request.form["date_time"]  # Get the date and time from the form
 
     if item_name and item_value and date_time:  # Make sure all fields are filled
         conn = get_db_connection()
-        conn.execute('INSERT INTO items (name, value, date_time) VALUES (?, ?, ?)', 
-                     (item_name, item_value, date_time))
+        conn.execute(
+            "INSERT INTO items (name, value, date_time) VALUES (?, ?, ?)",
+            (item_name, item_value, date_time),
+        )
         conn.commit()
         conn.close()
-    return redirect(url_for('patient'))  # Redirect to patient page after adding item
+    return redirect(url_for("patient"))  # Redirect to patient page after adding item
 
-@app.route('/delete/<int:item_id>', methods=['GET'])
+
+@app.route("/delete/<int:item_id>", methods=["GET"])
 def delete_item(item_id):
     conn = get_db_connection()
-    conn.execute('DELETE FROM items WHERE id = ?', (item_id,))
+    conn.execute("DELETE FROM items WHERE id = ?", (item_id,))
     conn.commit()
     conn.close()
-    return redirect(url_for('patient'))  # Redirect to patient page after deleting item
+    return redirect(url_for("patient"))  # Redirect to patient page after deleting item
 
-@app.route('/doctor', methods=['GET'])
+
+@app.route("/doctor", methods=["GET"])
 def doctor():
-    severity_filter = request.args.get('severity')  # Get the severity filter from the URL
-    name_filter = request.args.get('name_filter')  # Get the name filter from the URL
+    severity_filter = request.args.get(
+        "severity"
+    )  # Get the severity filter from the URL
+    name_filter = request.args.get("name_filter")  # Get the name filter from the URL
     conn = get_db_connection()
 
     # Build the SQL query with conditions based on the filters
-    query = 'SELECT * FROM items'
+    query = "SELECT * FROM items"
     params = []
 
     # Apply severity filter if present
     if severity_filter:
-        query += ' WHERE value = ?'
+        query += " WHERE value = ?"
         params.append(severity_filter)
-    
+
     # Apply name filter if present
     if name_filter:
         if params:
-            query += ' AND name LIKE ?'
+            query += " AND name LIKE ?"
         else:
-            query += ' WHERE name LIKE ?'
-        params.append(f'%{name_filter}%')
+            query += " WHERE name LIKE ?"
+        params.append(f"%{name_filter}%")
 
     # Execute the query with the filters
     items = conn.execute(query, params).fetchall()
+
+    # Fetch all messages from DB
+    messages = conn.execute("SELECT * FROM messages").fetchall()
+
     conn.close()
+    return render_template("doctor.html", items=items, messages=messages)
 
-    return render_template('doctor.html', items=items)
+
+def update_db(sender: str):
+    # Get message content
+    content = request.form["content"]
+    date_time = time.strftime("%I-%M %p")
+    with get_db_connection() as conn:
+        _ = conn.execute(
+            "INSERT INTO messages (sender, content, date_time) VALUES (?, ?, ?)",
+            (sender, content, date_time),
+        )
+        conn.commit()
 
 
-if __name__ == '__main__':
+@app.post("/patient/chat")
+def patient_chat():
+    update_db("patient")
+    socketio.emit("update")
+    return redirect(url_for("patient") + "#chat-form")
+
+
+@app.post("/doctor/chat")
+def doctor_chat():
+    update_db("doctor")
+    socketio.emit("update")
+    return redirect(url_for("doctor") + "#chat-form")
+
+
+if __name__ == "__main__":
     init_db()  # Initialize the database
-    app.run(debug=True)
-    #for opening to local public wifi, EG
+    socketio.run(app, debug=True, host="0.0.0.0", port=5000)
+    # for opening to local public wifi, EG

@@ -39,6 +39,25 @@
             </li>
             {% endfor %}
         </ul>
+
+        <!-- Chat form for communication betwen provider and patient -->
+        <form id="chat-form" action="/patient/chat" method="POST">
+            <h2>Chat</h2>
+            <div id="chat-history">
+              <ul>
+                  {% for message in messages %}
+                  <li class="message {{message['sender']}}">
+                      {{ message['content'] }}
+                      <br/>
+                      <div class="timestamp">{{ message['date_time'] }} </div>
+                  </li>
+                  {% endfor %}
+              </ul>
+            </div>
+            <input type="text" name="content" placeholder="Enter message" required>
+            <button type="submit">Send</button>
+        </form>
+
         <a href="{{ url_for('start') }}"><button>Sign Out</button></a>
         <script>
             // Display the value selected by the slider
@@ -46,6 +65,17 @@
             const sliderValue = document.getElementById("slider-value");
             slider.addEventListener("input", function() {
                 sliderValue.textContent = slider.value;
+            });
+        </script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+        <script type="text/javascript" charset="utf-8">
+            var socket = io();
+            socket.on('connect', function() {
+                socket.emit('connected');
+            });
+            socket.on('update', function() {
+                location.reload()
             });
         </script>
     </div>
