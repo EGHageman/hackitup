@@ -83,16 +83,30 @@ def delete_item(item_id):
 @app.route('/doctor', methods=['GET'])
 def doctor():
     severity_filter = request.args.get('severity')  # Get the severity filter from the URL
+    name_filter = request.args.get('name_filter')  # Get the name filter from the URL
     conn = get_db_connection()
 
-    if severity_filter:
-        # Filter conditions based on the selected severity
-        items = conn.execute('SELECT * FROM items WHERE value = ?', (severity_filter,)).fetchall()
-    else:
-        # Show all items if no severity filter is selected
-        items = conn.execute('SELECT * FROM items').fetchall()
+    # Build the SQL query with conditions based on the filters
+    query = 'SELECT * FROM items'
+    params = []
 
+    # Apply severity filter if present
+    if severity_filter:
+        query += ' WHERE value = ?'
+        params.append(severity_filter)
+    
+    # Apply name filter if present
+    if name_filter:
+        if params:
+            query += ' AND name LIKE ?'
+        else:
+            query += ' WHERE name LIKE ?'
+        params.append(f'%{name_filter}%')
+
+    # Execute the query with the filters
+    items = conn.execute(query, params).fetchall()
     conn.close()
+
     return render_template('doctor.html', items=items)
 
 
