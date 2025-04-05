@@ -5,14 +5,14 @@ body {
     font-family: 'Arial', sans-serif;
     background: url("https://png.pngtree.com/thumb_back/fh260/background/20230412/pngtree-colorful-clouds-cartoon-clouds-fantasy-clouds-sky-cute-background-image_2204266.jpg"); /* Background image */
     background-size: cover;
-    color: #e7a6b3; /* Text color */
+    color: #e4c6cd; /* Text color */
     margin: 0;
     padding: 0;
 }
 
 /* Header Styles */
 h1 {
-    color:#fcc4cf; /* I just like this pink. Might change later -M */
+    color:#e7a6b3; /* I just like this pink. Might change later -M */
     text-align: center;
     margin-top: 20px;
 }
@@ -44,7 +44,7 @@ form {
     margin: 0 auto;
     padding: 20px;
     background-color: #fff;
-    border-radius: 8px;
+    border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -64,6 +64,8 @@ input[type="range"] {
 ul {
     list-style-type: none;
     padding: 0;
+    border-color: #e7a6b3;
+    border-width: 5px;
 }
 
 li {
