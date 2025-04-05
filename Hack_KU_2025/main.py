@@ -29,9 +29,11 @@ def init_db():
 def home():
     return render_template('index.html')  # The homepage that links to `/patient`
 
+
 @app.route('/')
 def start():
     return render_template('index.html')  # The homepage that links to `/patient`
+
 
 @app.route('/sign-in', methods=['GET', 'POST'])
 def sign_in():
@@ -112,5 +114,5 @@ def doctor():
 
 if __name__ == '__main__':
     init_db()  # Initialize the database
-    app.run(debug=True, host="0.0.0.0", port=5000)
+    app.run(debug=True)
     #for opening to local public wifi, EG
