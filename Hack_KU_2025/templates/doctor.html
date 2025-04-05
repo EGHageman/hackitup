@@ -29,7 +29,14 @@
             <button type="submit">Filter</button>
         </form>
 
-        <h2>Patients Ledger</h2>
+        <!-- Filter by Name Input Field -->
+        <form action="{{ url_for('doctor') }}" method="GET">
+            <label for="name_filter">Search by Name:</label>
+            <input type="text" name="name_filter" id="name_filter" placeholder="Enter injury" value="{{ request.args.get('name_filter', '') }}">
+            <button type="submit">Filter by Name</button>
+        </form>
+
+        <h2>Conditions</h2>
         <ul>
             {% for item in items %}
             <li>
@@ -37,6 +44,7 @@
             </li>
             {% endfor %}
         </ul>
+
         <a href="{{ url_for('start') }}"><button>Sign Out</button></a>
     </div>
 </body>
