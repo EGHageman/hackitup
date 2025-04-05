@@ -8,16 +8,75 @@
 </head>
 <body>
     <div class="sign-in-container">
-        <h2>Doctor Sign-In</h2>
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Sign-in Page Styles */
+        /* Running seperate from the static styles sheet, EG*/
+        .sign-in-container {
+            max-width: 500px;
+            margin: 100px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
-        <!-- Sign-In Form -->
-        <form action="/doctor-sign-in" method="POST">
+        h2 {
+            text-align: center;
+            color: #005c87; /*Running it a bit darker then the buttons, EG*/
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            border-radius: 8px; /* Rounded corners for the input fields */
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #008CBA; /*I think this blue is very on point for general portals, EG*/
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #006F8C;
+        }
+
+        .forgot-password {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .forgot-password a {
+            color: #005c87;
+            text-decoration: none;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="sign-in-container">
+        <h2>Provider Sign-in</h2>
+
+        <form action="/sign-in" method="POST">
             <input type="text" name="username" placeholder="Enter Username" required>
             <input type="password" name="password" placeholder="Enter Password" required>
 
             <button type="submit">Sign In</button>
         </form>
-        
+
         <div class="forgot-password">
             <a href="#">Forgot Password?</a>
         </div>

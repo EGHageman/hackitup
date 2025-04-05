@@ -45,7 +45,7 @@ h2 {
 }
 
 .small-button{
-    background-color: #fcc4cf; 
+    background-color: #bc7b8b; 
     color: white;
     border: none;
     padding: 10px 20px;
@@ -54,6 +54,10 @@ h2 {
     border-radius: 5px;
     font-size: 16px;
     text-decoration: none;
+}
+
+.small-button:hover {
+    background-color: #a3576a;
 }
 
 .sign-out{
@@ -70,6 +74,11 @@ h2 {
     right: 10px;
     top: 10px;
 }
+
+.sign-out:hover {
+    background-color: #e7a6b3;
+}
+
     /* Form Styles */
 form {
     max-width: 500px;
