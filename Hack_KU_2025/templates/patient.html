@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conditions</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Patient Journal</h1>
+
+        <!-- Form to Add New Item and Slider Value -->
+        <form action="/add" method="POST">
+            <input type="text" name="item_name" placeholder="Enter Condition" required>
+
+            <!-- Slider to Select Integer Value -->
+            <label for="slider">Severity:</label>
+            <input type="range" id="slider" name="item_value" min="1" max="10" value="1">
+            <span id="slider-value">1</span>
+
+            <br>
+
+            <!-- Date and Time Picker -->
+            <label for="date_time">Date and Time:</label>
+            <input type="datetime-local" id="date_time" name="date_time" required>
+
+            <br>
+
+            <button type="submit">Add Item</button>
+        </form>
+
+        <h2>Conditions:</h2>
+        <ul>
+            {% for item in items %}
+            <li>
+                {{ item['name'] }} - Severity: {{ item['value'] }} - Time: {{ item['date_time'] }}
+                <a href="{{ url_for('delete_item', item_id=item['id']) }}">Remove</a>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <script>
+            // Display the value selected by the slider
+            const slider = document.getElementById("slider");
+            const sliderValue = document.getElementById("slider-value");
+            slider.addEventListener("input", function() {
+                sliderValue.textContent = slider.value;
+            });
+        </script>
+    </div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+/* styles.css */
+
+/* General Body Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header Styles */
+h1 {
+    color: #005c87; /* Medical blue */
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Button Styles */
+button {
+    background-color: #008CBA; /* Hospital blue */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px 0;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #006F8C;
+}
+
+/* Form Styles */
+form {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+input[type="text"], input[type="range"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+input[type="range"] {
+    width: 100%;
+}
+
+/* List of Conditions */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+}
+
+a {
+    text-decoration: none;
+    color: #d9534f; /* Red for delete */
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Container for the Page */
+.container {
+    width: 80%;
+    margin: 0 auto;
+}

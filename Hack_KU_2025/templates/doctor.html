@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor View</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Doctor's Dashboard</h1>
+
+        <!-- Filter Form to Select Severity -->
+        <form action="{{ url_for('doctor') }}" method="GET">
+            <label for="severity">Filter by Severity:</label>
+            <select name="severity" id="severity">
+                <option value="">All Severities</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+            <button type="submit">Filter</button>
+        </form>
+
+        <h2>Conditions</h2>
+        <ul>
+            {% for item in items %}
+            <li>
+                {{ item['name'] }} - Severity: {{ item['value'] }} - Date/Time: {{ item['date_time'] }}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
