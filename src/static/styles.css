@@ -1,7 +1,7 @@
 /* General Body Styles */
 body {
     font-family: "Arial", sans-serif;
-    background: url("https://png.pngtree.com/thumb_back/fh260/background/20230412/pngtree-colorful-clouds-cartoon-clouds-fantasy-clouds-sky-cute-background-image_2204266.jpg"); /* Background image */
+    background: url("background.jpg"); /* Background image */
     background-size: cover;
     color: #704d56; /* Text color */
     margin: 0;
@@ -224,7 +224,7 @@ li {
         .gemini-button {
             height: 100%;
             background-color: #dcd5e7;
-            background-image: url("https://upload.wikimedia.org/wikipedia/commons/5/51/Gemini_sparkle_v002.svg");
+            background-image: url("gemini.svg");
             background-position: center;
             background-size: 90%;
         }
