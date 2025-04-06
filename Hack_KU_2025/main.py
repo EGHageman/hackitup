@@ -93,7 +93,7 @@ def doctor_sign_in():
     )  # Render doctor sign-in page when accessed by GET request
 
 
-@app.route("/add", methods=["POST"])
+@app.post("/add")
 def add_item():
     item_name = request.form["item_name"]  # User can input the condition name
     item_value = request.form["item_value"]  # Get the value of the slider from the form
@@ -105,13 +105,13 @@ def add_item():
     date_time = strftime("%b %-d, %Y, %-I:%M %p ", date_time)
 
     if item_name and item_value and date_time:  # Make sure all fields are filled
-        conn = get_db_connection()
-        conn.execute(
-            "INSERT INTO items (name, value, date_time) VALUES (?, ?, ?)",
-            (item_name, item_value, date_time),
-        )
-        conn.commit()
-        conn.close()
+        with get_db_connection() as conn:
+            conn.execute(
+                "INSERT INTO items (name, value, date_time) VALUES (?, ?, ?)",
+                (item_name, item_value, date_time),
+            )
+            conn.commit()
+        update_client_data()
     return redirect(url_for("patient"))  # Redirect to patient page after adding item
 
 
@@ -121,6 +121,7 @@ def delete_item(item_id):
     conn.execute("DELETE FROM items WHERE id = ?", (item_id,))
     conn.commit()
     conn.close()
+    update_client_data()
     return redirect(url_for("patient"))  # Redirect to patient page after deleting item
 
 
@@ -173,7 +174,7 @@ def update_db(sender: str, content: str | None = None):
         conn.commit()
 
 
-def update_client_chats():
+def update_client_data():
     # Tell all connected clients to update chat history
     socketio.emit("update")
 
@@ -181,14 +182,14 @@ def update_client_chats():
 @app.post("/patient/chat")
 def patient_chat():
     update_db("patient")
-    update_client_chats()
+    update_client_data()
     return redirect(url_for("patient") + "#chat-form")
 
 
 @app.post("/doctor/chat")
 def doctor_chat():
     update_db("doctor")
-    update_client_chats()
+    update_client_data()
     return redirect(url_for("doctor") + "#chat-form")
 
 
@@ -196,7 +197,7 @@ def doctor_chat():
 def patient_gemini():
     content = ask_gemini()
     update_db("gemini", content)
-    update_client_chats()
+    update_client_data()
     return redirect(url_for("patient") + "#chat-form")
 
 
