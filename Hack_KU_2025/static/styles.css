@@ -42,8 +42,8 @@ h2 {
     background-color: #e7a6b3;
 }
 
-.small-button{
-    background-color: #bc7b8b; 
+.small-button {
+    background-color: #bc7b8b;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -58,8 +58,8 @@ h2 {
     background-color: #a3576a;
 }
 
-.sign-out{
-    background-color: #fcc4cf; 
+.sign-out {
+    background-color: #fcc4cf;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -77,7 +77,7 @@ h2 {
     background-color: #e7a6b3;
 }
 
-    /* Form Styles */
+/* Form Styles */
 form {
     max-width: 500px;
     margin: 0 auto;
@@ -130,6 +130,20 @@ li {
 .container {
     width: 80%;
     margin: 0 auto;
+}
+
+.condition-item {
+    display: flex;
+
+    .delete {
+        margin-left: auto;
+        vertical-align: center;
+    }
+
+    .timestamp {
+        font-size: 0.75em;
+        color: #666;
+    }
 }
 
 .side-view {
@@ -209,6 +223,7 @@ li {
 
         .gemini-button {
             height: 100%;
+            background-color: #dcd5e7;
             background-image: url("https://upload.wikimedia.org/wikipedia/commons/5/51/Gemini_sparkle_v002.svg");
             background-position: center;
             background-size: 90%;

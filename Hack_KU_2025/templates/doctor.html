@@ -51,9 +51,12 @@
           <h2>Conditions</h2>
           <ul>
             {% for item in items %}
-            <li>
-              {{ item['name'] }} - Severity: {{ item['value'] }} - Date/Time: {{
-              item['date_time'] }}
+            <li class="condition-item">
+              <div>
+                {{ item['name'] }} - Severity: {{ item['value'] }}
+                <br>
+                <span class="timestamp">{{ item['date_time'] }}</span>
+              </div>
             </li>
             {% endfor %}
           </ul>

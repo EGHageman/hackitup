@@ -1,6 +1,6 @@
 import json
 import sqlite3
-import time
+from time import asctime, strftime, strptime
 
 from dotenv import dotenv_values
 from flask import Flask, redirect, render_template, request, url_for
@@ -97,7 +97,12 @@ def doctor_sign_in():
 def add_item():
     item_name = request.form["item_name"]  # User can input the condition name
     item_value = request.form["item_value"]  # Get the value of the slider from the form
-    date_time = request.form["date_time"]  # Get the date and time from the form
+
+    # Get the date and time from the form
+    date_time = request.form["date_time"]
+    date_time = strptime(date_time, "%Y-%m-%dT%H:%M")
+    # Format into friendlier version
+    date_time = strftime("%b %-d, %Y, %-I:%M %p ", date_time)
 
     if item_name and item_value and date_time:  # Make sure all fields are filled
         conn = get_db_connection()
@@ -158,7 +163,7 @@ def update_db(sender: str, content: str | None = None):
     if content is None:
         # Get message content if not provided
         content = request.form["content"]
-    date_time = time.strftime("%I:%M %p")
+    date_time = strftime("%I:%M %p")
     # Insert message into db
     with get_db_connection() as conn:
         _ = conn.execute(
@@ -213,7 +218,7 @@ def ask_gemini():
             ]
         )
 
-        cur_time = time.asctime()
+        cur_time = asctime()
 
     # Prompt Gemini with condition list
     prompt = "The user will input a JSON list of health conditions they have experienced. Each element in the list is an object with a **description** of the issue, a provided **severity**, and a **date** when the issue first arose. The current date is {}. Respond with a paragraph for each unique health condition that the user experienced, providing further research into the health issue and an assessment of the severity based on the user's description, rated severity, and the time since issue occured. Do not include any bold or italics text markup. Separate new lines with double <br>. Do not include any other information. The issues the user experienced are: {}".format(
