@@ -1,60 +1,61 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>provider-portal</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='styles.css') }}"
-    />
-  </head>
-  <body>
-    <div class="container">
-      <h1>Doctor's Dashboard</h1>
-      <a class="sign-out" href="{{ url_for('start') }}">Sign Out</a>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>provider-portal</title>
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='styles.css') }}"
+  />
+</head>
+<body>
+  <div class="container">
+    <h1>Doctor's Dashboard</h1>
+    <a class="sign-out" href="{{ url_for('start') }}">Sign Out</a>
 
-      <!-- Filter Form to Select Severity -->
-      <form action="{{ url_for('doctor') }}" method="GET">
-        <label for="severity">Filter by Severity:</label>
-        <select name="severity" id="severity">
-          <option value="">All Severities</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
-          <option value="10">10</option>
-        </select>
-        <button type="submit">Filter</button>
-      </form>
+    <!-- Filter Form to Select Severity -->
+    <form action="{{ url_for('doctor') }}" method="GET">
+      <label for="severity">Filter by Severity:</label>
+      <select name="severity" id="severity">
+        <option value="">All Severities</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+      </select>
+      <button type="submit">Filter</button>
+    </form>
 
-      <!-- Filter by Name Input Field -->
-      <form action="{{ url_for('doctor') }}" method="GET">
-        <label for="name_filter">Search by Name:</label>
-        <input
-          type="text"
-          name="name_filter"
-          id="name_filter"
-          placeholder="Enter injury"
-          value="{{ request.args.get('name_filter', '') }}"
-        />
-        <button class="small-button" type="submit">Filter by Name</button>
-      </form>
+    <!-- Filter by Name Input Field -->
+    <form action="{{ url_for('doctor') }}" method="GET">
+      <label for="name_filter">Search by Name:</label>
+      <input
+        type="text"
+        name="name_filter"
+        id="name_filter"
+        placeholder="Enter injury"
+        value="{{ request.args.get('name_filter', '') }}"
+      />
+      <button class="small-button" type="submit">Filter by Name</button>
+    </form>
 
       <div class="side-view">
         <div class="panel">
+          <!-- Display all conditions with actions -->
           <h2>Conditions</h2>
           <ul>
             {% for item in items %}
             <li class="condition-item">
               <div>
                 {{ item['name'] }} - Severity: {{ item['value'] }}
-                <br>
+                <br />
                 <span class="timestamp">{{ item['date_time'] }}</span>
               </div>
             </li>
