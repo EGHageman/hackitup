@@ -102,7 +102,7 @@ def add_item():
     date_time = request.form["date_time"]
     date_time = strptime(date_time, "%Y-%m-%dT%H:%M")
     # Format into friendlier version
-    date_time = strftime("%b %-d, %Y, %-I:%M %p ", date_time)
+    date_time = strftime("%c", date_time)
 
     if item_name and item_value and date_time:  # Make sure all fields are filled
         with get_db_connection() as conn:
