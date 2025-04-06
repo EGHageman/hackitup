@@ -2,8 +2,6 @@
   <br>
   <img src="./assets/logo.png" alt="Logo" height="400">
   <br>
-  Hack It up
-  <br>
 </h1>
 
 <h4 align="center">An easy way to send your problems to your medical team</h4>
@@ -38,6 +36,9 @@ $ git clone https://github.com/EGHageman/hackitup
 
 # Go into the repository
 $ cd hackitup/Hack_KU_2025
+
+# Add your Gemini API key under .env
+$ echo GEMINI_API_KEY=<your_key> >> .env
 
 # Run the app with uv
 $ uv run main.py
