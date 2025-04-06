@@ -35,6 +35,7 @@ def init_db():
                         value INTEGER NOT NULL,
                         date_time TEXT NOT NULL
                     )""")
+
     conn.execute("""CREATE TABLE IF NOT EXISTS messages (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         sender TEXT NOT NULL,
@@ -153,9 +154,12 @@ def doctor():
     return render_template("doctor.html", items=items, messages=messages)
 
 
-def update_db(sender: str, content: str):
-    # Get message content
+def update_db(sender: str, content: str | None = None):
+    if content is None:
+        # Get message content if not provided
+        content = request.form["content"]
     date_time = time.strftime("%I:%M %p")
+    # Insert message into db
     with get_db_connection() as conn:
         _ = conn.execute(
             "INSERT INTO messages (sender, content, date_time) VALUES (?, ?, ?)",
@@ -164,34 +168,40 @@ def update_db(sender: str, content: str):
         conn.commit()
 
 
+def update_client_chats():
+    # Tell all connected clients to update chat history
+    socketio.emit("update")
+
+
 @app.post("/patient/chat")
 def patient_chat():
-    content = request.form["content"]
-    update_db("patient", content)
-    socketio.emit("update")
+    update_db("patient")
+    update_client_chats()
     return redirect(url_for("patient") + "#chat-form")
 
 
 @app.post("/doctor/chat")
 def doctor_chat():
-    content = request.form["content"]
-    update_db("doctor", content)
-    socketio.emit("update")
+    update_db("doctor")
+    update_client_chats()
     return redirect(url_for("doctor") + "#chat-form")
 
 
 @app.post("/patient/gemini")
 def patient_gemini():
-    update_db("gemini", ask_gemini())
-    socketio.emit("update")
+    content = ask_gemini()
+    update_db("gemini", content)
+    update_client_chats()
     return redirect(url_for("patient") + "#chat-form")
 
 
 def ask_gemini():
     with get_db_connection() as conn:
+        # Fetch all conditions from db
         items = conn.execute(
             "SELECT * FROM items"
         ).fetchall()  # Fetch all items from DB
+        # Format conditions into json list
         conditions = json.dumps(
             [
                 {
@@ -204,6 +214,8 @@ def ask_gemini():
         )
 
         cur_time = time.asctime()
+
+    # Prompt Gemini with condition list
     prompt = "The user will input a JSON list of health conditions they have experienced. Each element in the list is an object with a **description** of the issue, a provided **severity**, and a **date** when the issue first arose. The current date is {}. Respond with a paragraph for each unique health condition that the user experienced, providing further research into the health issue and an assessment of the severity based on the user's description, rated severity, and the time since issue occured. Do not include any bold or italics text markup. Separate new lines with double <br>. Do not include any other information. The issues the user experienced are: {}".format(
         cur_time, conditions
     )
