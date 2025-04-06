@@ -35,7 +35,7 @@ To clone and run **Hack It Up**, you'll need [Git](https://git-scm.com) and [uv]
 $ git clone https://github.com/EGHageman/hackitup
 
 # Go into the repository
-$ cd hackitup/Hack_KU_2025
+$ cd hackitup/src
 
 # Add your Gemini API key under .env
 $ echo GEMINI_API_KEY=<your_key> >> .env
@@ -52,8 +52,9 @@ You can [download](https://github.com/EGHageman/hackitup/archive/refs/heads/main
 
 This product could not be possible without:
 
-- [Flask](http://electron.atom.io/)
-- [Flask-socketio](https://flask-socketio.readthedocs.io/en/latest/)
-- [sqlite](https://www.sqlite.org/index.html)
-- [uv](https://docs.astral.sh/uv/)
-- [Google Gemini](https://gemini.google.com/)
+- [Flask](http://electron.atom.io/): Website building
+- [Flask-socketio](https://flask-socketio.readthedocs.io/en/latest/): Chat websocket integration
+- [sqlite](https://www.sqlite.org/index.html): Database management
+- [uv](https://docs.astral.sh/uv/): Python version and package management
+- [Google Gemini](https://gemini.google.com/): LLM Integration
+- [Markdownify](https://github.com/amitmerchant1990/electron-markdownify#readme): README template
